@@ -1,0 +1,64 @@
+{% extends "/shared/_layout.html" %}
+{% block nav %}Home{% endblock %}
+{% block main_content %}
+
+
+<div class="container main-feed">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">All Projects</h2>
+                    <div class="card-subtitle mb-2">
+                        Here's what is out there
+                    </div>
+
+                    {% for p in projects %}
+                    <div class="feed-item {{projects[p]['user_status']}}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/projects/{{projects[p]['link_identifier']}}">{{projects[p]['name']}}</a>
+                                <div class="desc"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{projects[p]['user_status_formatted']}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{projects[p]['desc']}}
+                                <div class="desc"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <a href="/projects/{{projects[p]['link_identifier']}}"
+                                    class="btn btn-outline-info btn-sm align-self-end">Learn More</a>
+                                {% if projects[p]['user_status'] %}
+                                <button type="submit" class="btn btn-outline-success btn-sm align-self-end">Got to my
+                                    attempt</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success btn-sm align-self-end">Attempt</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/projects.css">
+{% endblock %}

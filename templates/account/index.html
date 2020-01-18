@@ -1,0 +1,67 @@
+{% extends "/shared/_layout.html" %}
+{% block nav %}Home{% endblock %}
+{% block main_content %}
+
+
+<div class="container main-feed">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">My Projects</h2>
+                    <a href="#" class="card-subtitle mb-2">See full schedule</a>
+                    {% for d in day_info %}
+                    <div class="feed-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/attempt/{{d}}">{{day_info[d]['project_name']}}</a> Day {{ day_info[d]['ordinal'] }}
+                                <div>{{day_info[d]['day'].description}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-outline-success btn-sm align-self-end">Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="card-footer text-muted">
+                    <a href="/projects">See the project list</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Feed</h2>
+                    <div class="card-subtitle mb-2">
+                        Here's what all your friends are doing
+                    </div>
+
+                    {% for i in results %}
+                    <div class="feed-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#">Friend {{i}}</a>
+                                <div class="desc">{{results[i]}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-outline-info btn-sm align-self-end">Say Whaddup</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}

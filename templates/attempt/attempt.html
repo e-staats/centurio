@@ -1,0 +1,38 @@
+{% extends "/shared/_layout.html" %}
+{% block nav %}Home{% endblock %}
+{% block main_content %}
+
+
+<div class="container main-feed">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ attempt.project_id }}</h2>
+                    {% for d in attempt.attempt_days %}
+                    <div class="feed-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#">Day {{d}}</a>
+                                <div class="desc">Day description goes here</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-outline-success btn-sm align-self-end">Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}

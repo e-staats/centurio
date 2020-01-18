@@ -1,0 +1,11 @@
+.main-feed .in-progress {
+    background-color: rgb(215, 255, 213);
+}
+
+.main-feed .complete {
+    background-color: rgb(117, 182, 117);
+}
+
+.main-feed .abandonded {
+    background-color: rgb(255, 199, 199);
+}
