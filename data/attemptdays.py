@@ -1,11 +1,12 @@
 import mongoengine
 import datetime
 
-class AttemptDay(mongoengine.Document):
-    attempt_id = mongoengine.ObjectIdField(required=True)
+class AttemptDay(mongoengine.EmbeddedDocument):
+    project_id = mongoengine.ObjectIdField(required=True, index=True)
+    day_id = mongoengine.ObjectIdField(required=True, index=True)
     ordinal = mongoengine.IntField(required=True)
-    status = mongoengine.IntField(default=1)
-    scheduled_day = mongoengine.DateField()
+    status = mongoengine.StringField(default='upcoming') #upcoming #complete #past-due
+    scheduled_date = mongoengine.DateField()
     complete_instant = mongoengine.DateTimeField()
 
     meta = {

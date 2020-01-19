@@ -1,6 +1,6 @@
 from centurio.data.projects import Project
 from centurio.data.days import Day
-from centurio.data.projectattempts import Attempt
+from centurio.data.attempts import Attempt
 from centurio.data.users import User
 from centurio.data.cohorts import Cohort
 from centurio.data.attemptdays import AttemptDay
@@ -34,16 +34,18 @@ def day_info_for_timerange(user,start_date,end_date):
 
 def get_attempt_info_for_date(attempt,date,project):
     try:
-        attempt_days_list = attempt.attempt_days[str(date)]
+        attempt_days_list = attempt.attempt_days.filter(scheduled_date=date)
     except:
         return
 
     if not project:
-        return
+        project = Project.objects(id=attempt.project_id).first()
+        if not project:
+            return
     
-    for attempt_day_id in attempt_days_list:
-        attempt_day = AttemptDay.objects(id=attempt_day_id).first()
-        day = project.days.get(ordinal=attempt_day.ordinal)
+    for attempt_day in attempt_days_list:
+        day_id = attempt_day.day_id
+        day = Day.objects(id=day_id).first()
         return {"project_name": project.name,
                 "ordinal": attempt_day.ordinal,
                 "day": day,

@@ -11,13 +11,14 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">{{ attempt.project_id }}</h2>
+                    <h2 class="card-title">{{ attempt.name }}</h2>
+                    <h2 class="card-title">{{ attempt.status }}</h2>
                     {% for d in attempt.attempt_days %}
                     <div class="feed-item">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="#">Day {{d}}</a>
-                                <div class="desc">Day description goes here</div>
+                                <a href="#">Day {{d.ordinal}}</a>
+                                <div class="desc">{{day_descriptions[d.ordinal]}}</div>
                             </div>
                         </div>
                         <div class="row">

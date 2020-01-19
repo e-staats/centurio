@@ -9,10 +9,11 @@ from centurio.data.attemptdays import AttemptDay
 class Attempt(mongoengine.Document):
     project_id = mongoengine.ObjectIdField(required=True)
     user_id = mongoengine.ObjectIdField(required=True)
+    name = mongoengine.StringField(required=True)
     status = mongoengine.StringField(default='in-progress') #abandoned, in-progress, complete
     start_date = mongoengine.DateField(default=datetime.date.today)
     completion_date = mongoengine.DateTimeField()
-    attempt_days = mongoengine.DictField()
+    attempt_days = mongoengine.EmbeddedDocumentListField(AttemptDay)
 
     meta = {
         'db_alias': 'default',

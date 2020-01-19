@@ -40,8 +40,8 @@
                                 <a href="/projects/{{projects[p]['link_identifier']}}"
                                     class="btn btn-outline-info btn-sm align-self-end">Learn More</a>
                                 {% if projects[p]['user_status'] %}
-                                <button type="submit" class="btn btn-outline-success btn-sm align-self-end">Got to my
-                                    attempt</button>
+                                <a href="/attempt/{{projects[p]['attempt_id']}}" class="btn btn-outline-success btn-sm align-self-end">Go to my
+                                    attempt</a>
                                 {% else %}
                                 <button type="submit" class="btn btn-success btn-sm align-self-end">Attempt</button>
                                 {% endif %}

@@ -1,10 +1,11 @@
 from centurio.data.projects import Project
 from centurio.data.days import Day
-from centurio.data.projectattempts import Attempt
+from centurio.data.attempts import Attempt
 from centurio.data.users import User
 from centurio.data.cohorts import Cohort
 from centurio.data.attemptdays import AttemptDay
 import centurio.services.mongo_setup as mongo_setup
+import centurio.services.day_services as day_service
 import datetime
 # pylint: disable=no-member
 
@@ -39,8 +40,10 @@ def format_project_list_for_user(project_dict, user) -> dict:
     user_projects = get_project_statuses_for_user(user)
     for project_id in project_dict:
         if project_id in user_projects:
-            project_dict[project_id]['user_status'] = user_projects[project_id]
-            project_dict[project_id]['user_status_formatted'] = user_projects[project_id].replace("-"," ").title()
+            attempt_id, attempt_status = user_projects[project_id]
+            project_dict[project_id]['attempt_id'] = attempt_id
+            project_dict[project_id]['user_status'] = attempt_status
+            project_dict[project_id]['user_status_formatted'] = attempt_status.replace("-"," ").title()
         else:
             project_dict[project_id]['user_status'] = ''
 
@@ -50,7 +53,7 @@ def get_project_statuses_for_user(user):
     for attempt_id in attempt_list:
         attempt = Attempt.objects(id=attempt_id).first()
         project_id = attempt.project_id
-        return_dict[project_id] = attempt.status
+        return_dict[project_id] = (attempt.id, attempt.status)
     return return_dict
 
 def get_projects_for_user(user):
@@ -71,37 +74,35 @@ def add_project_to_user(user, project_link):
     start_date = datetime.date.today()
     date = start_date
 
-    project_attempt = Attempt()
-    project_attempt.user_id = user_id
-    project_attempt.project_id = project.id
-    project_attempt.start_date = start_date
-    success = project_attempt.save()
+    attempt = Attempt()
+    attempt.user_id = user_id
+    attempt.project_id = project.id
+    attempt.start_date = start_date
+    attempt.name = user.name + "\'s " + project.name
+    success = attempt.save()
     if not success:
         print("unable to add project. Check the IDs and try again.")
         return
     
-    update_dict={}
-    for day in project.days:
-        project_attempt_day = AttemptDay()
-        project_attempt_day.ordinal = day.ordinal
-        project_attempt_day.scheduled_day = date
-        project_attempt_day.attempt_id = project.id
-        project_attempt_day.save()
-        update_dict[str(date)]=[project_attempt_day.id]
+    for day_id in project.days:
+        day = day_service.get_day_from_id(day_id).first()
+        attempt_day = AttemptDay()
+        attempt_day.ordinal = day.ordinal
+        attempt_day.scheduled_date = date
+        attempt_day.project_id = project.id
+        attempt_day.day_id = day.id
+        attempt.attempt_days.append(attempt_day)
         date = date + datetime.timedelta(days=1)
     
-    project_attempt.attempt_days = update_dict
-    success = project_attempt.save()
+    success = attempt.save()
     if not success:
         return
-    success = User.objects(id=user_id).update_one(push__attempts=project_attempt.id)
+    success = User.objects(id=user_id).update_one(push__attempts=attempt.id)
     if not success:
         return
     
     cohort_id = find_cohort(project.id)
     add_user_to_cohort(user_id,cohort_id)
-
-    print(f"{project.name} added to {user.name}")
 
 def find_cohort(project_id):
     cohort = Cohort.objects().filter(project_id=project_id,status=1).first()
@@ -111,7 +112,6 @@ def find_cohort(project_id):
         cohort.save()
     return cohort.id
 
-#needs testing
 def add_user_to_cohort(user_id,cohort_id):
     success = Cohort.objects(id=cohort_id).update_one(push__users=user_id)
     if not success:
@@ -134,12 +134,22 @@ def add_user_to_cohort(user_id,cohort_id):
 def get_cohort_max():
     return 15
 
+def get_day_objects(project):
+    results = []
+    for day_id in project.days:
+        day = Day.objects(id=day_id).first()
+        results.append(day)
+    return results
+
+
+##############################################################
 
 def _add_project_test():
     project = Project()
     project.name = "20 days of Pushups" #input("What is the name of this project? ")
     project.description = "In this project, you will do an ever increasing amount of pushups." #input("Describe this project? ")
     project.link_identifier = "20-days-of-pushups"
+    project.save()
 
     for i in range(1,21):
         day = Day()
@@ -147,7 +157,9 @@ def _add_project_test():
         day.description = f"Do {i} pushups"
         day.ordinal = i
         day.est_minutes = 2
-        project.days.append(day)
+        success = day.save()
+        if success:
+            project.days.append(day.id)
 
     project.save()
 
@@ -155,7 +167,7 @@ def _add_project_test():
     project2.name = "25 days of Python" #input("What is the name of this project? ")
     project2.description = "In this project, you will code a cool app" #input("Describe this project? ")
     project2.link_identifier = "25-days-of-python"
-
+    project2.save()
 
     for i in range(1,26):
         day = Day()
@@ -163,7 +175,9 @@ def _add_project_test():
         day.description = f"Code for {3*i} minutes"
         day.ordinal = i
         day.est_minutes = 3*i
-        project2.days.append(day)
+        success = day.save()
+        if success:
+            project.days.append(day.id)
 
     project2.save()
 

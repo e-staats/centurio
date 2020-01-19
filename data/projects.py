@@ -13,7 +13,7 @@ class Project(mongoengine.Document):
     description = mongoengine.StringField()
     link_identifier = mongoengine.StringField(required=True, unique=True)
     creation_date = mongoengine.DateTimeField(default=datetime.datetime.now)
-    days = mongoengine.EmbeddedDocumentListField(Day)
+    days = mongoengine.ListField()
 
     meta = {
         'db_alias': 'default',
