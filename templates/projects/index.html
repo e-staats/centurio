@@ -40,11 +40,15 @@
                                 <a href="/projects/{{projects[p]['link_identifier']}}"
                                     class="btn btn-outline-info btn-sm align-self-end">Learn More</a>
                                 {% if projects[p]['user_status'] %}
-                                <a href="/attempt/{{projects[p]['attempt_id']}}" class="btn btn-outline-success btn-sm align-self-end">Go to my
+                                <a href="/attempt/{{projects[p]['attempt_id']}}"
+                                    class="btn btn-outline-success btn-sm align-self-end">Go to my
                                     attempt</a>
                                 {% else %}
-                                <button type="submit" class="btn btn-success btn-sm align-self-end">Attempt</button>
+                                <button id="attempt" name="{{projects[p]['link_identifier']}}" type="submit"
+                                    class="btn btn-success btn-sm align-self-end">Attempt</button>
                                 {% endif %}
+                                <!-- extra button for testing <button id="attempt" name="{{projects[p]['link_identifier']}}" type="submit"
+                                    class="btn btn-success btn-sm align-self-end">Attempt</button> -->
                             </div>
                         </div>
                     </div>
@@ -61,4 +65,16 @@
 
 {% block additional_css %}
 <link rel="stylesheet" href="/static/css/projects.css">
+{% endblock %}
+{% block additional_js %}
+<script src="/static/js/project.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll("#attempt")
+        for (const button of buttons) {
+            button.onclick = attempt_project
+        }
+    });
+
+</script>
 {% endblock %}

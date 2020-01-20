@@ -18,7 +18,7 @@ def get_todays_attemptdays_for_user(user):
     return day_info_for_timerange(user,datetime.date.today(),datetime.date.today())
 
 def day_info_for_timerange(user,start_date,end_date):
-    attempt_list = Attempt.objects().filter(user_id=user.id,start_date__gte=start_date,start_date__lte=end_date)
+    attempt_list = Attempt.objects().filter(user_id=user.id,start_date__lte=end_date)
     date = start_date
     while date >= start_date and date <= end_date:
         results = {}

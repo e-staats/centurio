@@ -85,7 +85,7 @@ def add_project_to_user(user, project_link):
         return
     
     for day_id in project.days:
-        day = day_service.get_day_from_id(day_id).first()
+        day = day_service.get_day_from_id(day_id)
         attempt_day = AttemptDay()
         attempt_day.ordinal = day.ordinal
         attempt_day.scheduled_date = date
@@ -103,6 +103,8 @@ def add_project_to_user(user, project_link):
     
     cohort_id = find_cohort(project.id)
     add_user_to_cohort(user_id,cohort_id)
+
+    return attempt.id
 
 def find_cohort(project_id):
     cohort = Cohort.objects().filter(project_id=project_id,status=1).first()
@@ -177,7 +179,7 @@ def _add_project_test():
         day.est_minutes = 3*i
         success = day.save()
         if success:
-            project.days.append(day.id)
+            project2.days.append(day.id)
 
     project2.save()
 

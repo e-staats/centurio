@@ -6,11 +6,24 @@
         <div class="col-md-2"></div>
 
         <div class="col-md-8">
+            <h1 id="counter">0</h1>
+            <button>Click me</button>
             <h1>Imagine a big cool splashy intro page here</h1>
+
         </div>
 
 
         <div class="col-md-2"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block additional_js %}
+<script src="/static/js/home.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('button').onclick = count
+    });
+    let counter = 0;
+</script>
 {% endblock %}
