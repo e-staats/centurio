@@ -16,6 +16,11 @@
                         Here's what is out there
                     </div>
 
+                    {% if not projects %}
+                    <button id="test_project_maker" name="test_project_maker" type="submit"
+                    class="btn btn-success btn-sm align-self-end">Populate Projects</button>
+                    {% endif %}
+
                     {% for p in projects %}
                     <div class="feed-item {{projects[p]['user_status']}}">
                         <div class="row">
@@ -74,6 +79,9 @@
         for (const button of buttons) {
             button.onclick = attempt_project
         }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector("#test_project_maker").onclick = make_test_projects
     });
 
 </script>

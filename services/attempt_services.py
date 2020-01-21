@@ -5,10 +5,13 @@ from centurio.data.users import User
 from centurio.data.cohorts import Cohort
 from centurio.data.attemptdays import AttemptDay
 import centurio.services.mongo_setup as mongo_setup
+import centurio.services.attempt_services as attempt_service
 import datetime
+from bson.objectid import ObjectId
 # pylint: disable=no-member
 
 def get_attempt_from_id(attempt_id):
+    mongo_setup.global_init()
     attempt = Attempt.objects(id=attempt_id).first()
     if not attempt:
         return None
@@ -50,3 +53,11 @@ def get_attempt_info_for_date(attempt,date,project):
                 "ordinal": attempt_day.ordinal,
                 "day": day,
                 }
+
+def complete_day(attempt_id, day_id):
+    mongo_setup.global_init()
+    did = ObjectId(day_id)
+    success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__status="complete")
+    if not success:
+        return None
+    return success

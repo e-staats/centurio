@@ -13,3 +13,17 @@ function attempt_project () {
     });
 }
 
+function make_test_projects () {
+    $.ajax({
+        type: "POST",
+        url: "/_make_test_projects",
+        dataType: "json",
+        success: function (response) {
+            window.location = response.redirect_url;
+        },
+        error: function (rs, e) {
+            console.log(rs);
+        }
+    });
+}
+

@@ -9,3 +9,8 @@ class Day(mongoengine.Document):
     description = mongoengine.StringField()
     creation_date = mongoengine.DateTimeField(default=datetime.datetime.now)
     est_minutes = mongoengine.IntField()
+    
+    meta = {
+        'db_alias': 'default',
+        'collection': 'days'    
+    }

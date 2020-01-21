@@ -23,7 +23,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-outline-success btn-sm align-self-end">Complete</button>
+                                <button id="day" name="{{d.id}}" data-attempt='{{attempt.id}}' class="btn btn-outline-success btn-sm align-self-end">Complete</button>
                             </div>
                         </div>
                     </div>
@@ -36,4 +36,17 @@
         <div class="col-md-2"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block additional_js %}
+<script src="/static/js/attempt.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll("#day")
+    for (const button of buttons) {
+        button.onclick = complete_day
+    }
+});
+
+</script>
 {% endblock %}

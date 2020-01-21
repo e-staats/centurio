@@ -20,7 +20,6 @@ def index():
     #     return vm.to_dict()
 
     results = vm.to_dict()
-    #project_service._add_project_test()
     results['projects'] = project_service.get_project_summaries()
     project_service.format_project_list_for_user(results['projects'],vm.user)
     
@@ -30,7 +29,7 @@ def index():
 
 @blueprint.route('/_attempt_project', methods=['POST'])
 @response(template_file='projects/index.html')
-def register_post():
+def attempt_project():
     vm = IndexViewModel()
     if vm.error:
         return vm.to_dict()
@@ -38,6 +37,15 @@ def register_post():
     if not attempt_id:
         return jsonify(status="error", message=vm.error)
     return jsonify(status="success", redirect_url=f"/attempt/{attempt_id}")
+
+@blueprint.route('/_make_test_projects', methods=['POST'])
+@response(template_file='projects/index.html')
+def make_test_projects():
+    vm = IndexViewModel()
+    if vm.error:
+        return vm.to_dict()
+    project_service._add_project_test()
+    return jsonify(status="success", redirect_url="/projects")
 
 # ################### PROJECT PAGES #################################
 
