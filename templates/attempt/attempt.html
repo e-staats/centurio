@@ -23,7 +23,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button id="day" name="{{d.id}}" data-attempt='{{attempt.id}}' class="btn btn-outline-success btn-sm align-self-end">Complete</button>
+                                {% if d.status=="complete" %}
+                                <button id="day-complete" name="{{d.id}}" data-attempt='{{attempt.id}}'
+                                    class="btn btn-success btn-sm align-self-end completed" disabled>Completed</button>
+                                {% else %}
+                                <button id="day" name="{{d.id}}" data-attempt='{{attempt.id}}'
+                                    class="btn btn-outline-success btn-sm align-self-end complete">Complete</button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -41,12 +47,12 @@
 {% block additional_js %}
 <script src="/static/js/attempt.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll("#day")
-    for (const button of buttons) {
-        button.onclick = complete_day
-    }
-});
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll("#day")
+        for (const button of buttons) {
+            $(button).one('click', complete_day)
+        }
+    });
 
 </script>
 {% endblock %}

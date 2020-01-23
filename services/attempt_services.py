@@ -17,6 +17,16 @@ def get_attempt_from_id(attempt_id):
         return None
     return attempt
 
+def check_attempt_status(attempt_id):
+    mongo_setup.global_init()
+    attempt = Attempt.objects(id=attempt_id).first()
+    completed_days = attempt.attempt_days.filter(status='complete')
+    if len(completed_days)==len(attempt.attempt_days):
+        success = Attempt.objects(id=attempt_id).update(set__status="complete")
+        success = Attempt.objects(id=attempt_id).update(set__completion_date=datetime.datetime.now())
+        return success
+    return None
+
 def get_todays_attemptdays_for_user(user):
     return day_info_for_timerange(user,datetime.date.today(),datetime.date.today())
 
@@ -58,6 +68,8 @@ def complete_day(attempt_id, day_id):
     mongo_setup.global_init()
     did = ObjectId(day_id)
     success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__status="complete")
+    success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__complete_instant=datetime.datetime.now())
     if not success:
         return None
+    success = check_attempt_status(attempt_id)
     return success

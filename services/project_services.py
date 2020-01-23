@@ -42,21 +42,28 @@ def format_project_list_for_user(project_dict, user) -> dict:
     user_projects = get_project_statuses_for_user(user)
     for project_id in project_dict:
         if project_id in user_projects:
-            attempt_id, attempt_status = user_projects[project_id]
+            attempt_id, attempt_status,last_completion_date = user_projects[project_id]
             project_dict[project_id]['attempt_id'] = attempt_id
             project_dict[project_id]['user_status'] = attempt_status
+            project_dict[project_id]['completion_date'] = last_completion_date
             project_dict[project_id]['user_status_formatted'] = attempt_status.replace("-"," ").title()
         else:
             project_dict[project_id]['user_status'] = ''
 
 def get_project_statuses_for_user(user):
     return_dict = {}
-    attempt_list = user.attempts
-    for attempt_id in attempt_list:
-        attempt = Attempt.objects(id=attempt_id).first()
+    attempt_list = Attempt.objects(user_id=user.id)
+    for attempt in attempt_list:
         project_id = attempt.project_id
-        return_dict[project_id] = (attempt.id, attempt.status)
+        last_completion_date = get_last_completion_for_project_and_user(project_id, user.id)
+        return_dict[project_id] = (attempt.id, attempt.status, last_completion_date)
     return return_dict
+
+def get_last_completion_for_project_and_user(project_id,user_id):
+    attempt = Attempt.objects(project_id=project_id,user_id=user_id).filter(status="complete").order_by('-completion_date').first()
+    if attempt:
+        return attempt.completion_date.strftime("%B %d %Y")
+
 
 def get_projects_for_user(user):
     return_list = []

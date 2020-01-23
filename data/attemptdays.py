@@ -9,4 +9,5 @@ class AttemptDay(mongoengine.EmbeddedDocument):
     status = mongoengine.StringField(default='upcoming') #upcoming #complete #past-due
     scheduled_date = mongoengine.DateField()
     complete_instant = mongoengine.DateTimeField()
+    user_comment = mongoengine.StringField()
 
