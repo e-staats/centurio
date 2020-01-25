@@ -18,7 +18,7 @@
 
                     {% if not projects %}
                     <button id="test_project_maker" name="test_project_maker" type="submit"
-                    class="btn btn-success btn-sm align-self-end">Populate Projects</button>
+                        class="btn btn-success btn-sm align-self-end">Populate Projects</button>
                     {% endif %}
 
                     {% for p in projects %}
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                {{projects[p]['user_status_formatted']}} {{projects[p]['completion_date']}} 
+                                {{projects[p]['user_status_formatted']}} {{projects[p]['completion_date']}}
                             </div>
                         </div>
                         <div class="row">
@@ -52,12 +52,13 @@
                                 <button id="attempt" name="{{projects[p]['link_identifier']}}" type="submit"
                                     class="btn btn-success btn-sm align-self-end">Attempt</button>
                                 {% endif %}
-                                <!-- extra button for testing <button id="attempt" name="{{projects[p]['link_identifier']}}" type="submit"
-                                    class="btn btn-success btn-sm align-self-end">Attempt</button> -->
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+                <div class="card-footer text-muted">
+                    Have an idea for a project? Submit your idea <a href="/projects/submit">here!</a>
                 </div>
             </div>
         </div>

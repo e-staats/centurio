@@ -1,6 +1,7 @@
 from centurio.data.users import User
 from passlib.handlers.sha2_crypt import sha512_crypt as crypto
 import centurio.services.mongo_setup as mongo_setup
+import centurio.services.attempt_services as attempt_service
 import bson
 
 # pylint: disable=no-member
@@ -44,5 +45,14 @@ def validate_user(email: str, password: str) -> User:
     if not verify_hash(user.hashed_pw, password):
         return False
     return user
+
+def construct_feed_user_list(user):
+    #get the members of the cohort
+    #todo
+    active_attempts = attempt_service.get_active_attempt_list(user)
+    user_list = []
+    #get friends
+    user_list.append(list(User.objects(id=user.id).friends_list))
+
 
 

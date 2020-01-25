@@ -19,6 +19,8 @@ blueprint = flask.Blueprint('attempt', __name__, template_folder='templates')
 @response(template_file='attempt/attempt.html')
 def project_details(attempt_id: str):
     vm = AttemptViewModel(attempt_id)
+    if not vm.user_id:
+        return flask.redirect('account/login')
     if not vm.attempt:
        return flask.abort(status=404)
 

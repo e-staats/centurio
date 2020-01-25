@@ -9,3 +9,11 @@
 .main-feed .abandonded {
     background-color: rgb(255, 199, 199);
 }
+
+input {
+    margin-bottom: 30px;
+}
+
+textarea {
+    margin-bottom: 30px;
+}

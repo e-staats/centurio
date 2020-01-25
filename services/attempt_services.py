@@ -73,3 +73,7 @@ def complete_day(attempt_id, day_id):
         return None
     success = check_attempt_status(attempt_id)
     return success
+
+def get_active_attempt_list(user):
+    attempts = Attempt.objects(user_id=user.id, status='in-progress')
+    return list(attempts)

@@ -25,6 +25,9 @@ def index():
     results = vm.to_dict()
     results['day_info']=attempt_service.get_todays_attemptdays_for_user(vm.user)
     results['results']={}
+
+    #friends list
+    
     for i in range(5):
         results['results'][i]="What they're working on"
 

@@ -13,6 +13,10 @@ body {
     font-weight: bold;
 }
 
+.main-feed h4 {
+    margin-top: 15px;
+}
+
 .main-feed .feed-item {
     border: 1px solid #d3d3d3;
     padding: 10px;
