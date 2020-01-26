@@ -80,6 +80,7 @@ def add_project_to_user(user, project_link):
     project = Project.objects().filter(link_identifier=project_link).first()
     if not project:
         return
+    cohort_id = find_cohort(project.id)
     start_date = datetime.date.today()
     date = start_date
 
@@ -88,6 +89,7 @@ def add_project_to_user(user, project_link):
     attempt.project_id = project.id
     attempt.start_date = start_date
     attempt.name = user.name + "\'s " + project.name
+    attempt.cohort_id = cohort_id
     success = attempt.save()
     if not success:
         print("unable to add project. Check the IDs and try again.")
@@ -109,8 +111,7 @@ def add_project_to_user(user, project_link):
     success = User.objects(id=user_id).update_one(push__attempts=attempt.id)
     if not success:
         return
-    
-    cohort_id = find_cohort(project.id)
+        
     add_user_to_cohort(user_id,cohort_id)
 
     return attempt.id

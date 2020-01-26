@@ -14,6 +14,7 @@ class Attempt(mongoengine.Document):
     start_date = mongoengine.DateField(default=datetime.date.today)
     completion_date = mongoengine.DateTimeField()
     attempt_days = mongoengine.EmbeddedDocumentListField(AttemptDay)
+    cohort_id = mongoengine.ObjectIdField()
 
     meta = {
         'db_alias': 'default',

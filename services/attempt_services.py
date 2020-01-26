@@ -27,11 +27,11 @@ def check_attempt_status(attempt_id):
         return success
     return None
 
-def get_todays_attemptdays_for_user(user):
-    return day_info_for_timerange(user,datetime.date.today(),datetime.date.today())
+def get_todays_attemptdays_for_user(user_id):
+    return day_info_for_timerange(user_id,datetime.date.today(),datetime.date.today())
 
-def day_info_for_timerange(user,start_date,end_date):
-    attempt_list = Attempt.objects().filter(user_id=user.id,start_date__lte=end_date)
+def day_info_for_timerange(user_id,start_date,end_date):
+    attempt_list = Attempt.objects().filter(user_id=user_id,start_date__lte=end_date)
     date = start_date
     while date >= start_date and date <= end_date:
         results = {}

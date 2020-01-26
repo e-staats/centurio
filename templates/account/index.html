@@ -38,15 +38,17 @@
                 <div class="card-body">
                     <h2 class="card-title">Feed</h2>
                     <div class="card-subtitle mb-2">
-                        Here's what all your friends are doing
+                        Here's what all your friends are doing today
                     </div>
 
-                    {% for i in results %}
+                    {% for user in results %}
                     <div class="feed-item">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="#">Friend {{i}}</a>
-                                <div class="desc">{{results[i]}}</div>
+                                <a href="#">{{user}}</a>
+                                {% for attempt in results[user] %}
+                                <div class="desc">{{results[user][attempt]['project_name']}} Day {{results[user][attempt]['ordinal']}}</div>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="row">

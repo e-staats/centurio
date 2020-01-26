@@ -23,13 +23,14 @@ def index():
 
     #fake data
     results = vm.to_dict()
-    results['day_info']=attempt_service.get_todays_attemptdays_for_user(vm.user)
+    results['day_info']=attempt_service.get_todays_attemptdays_for_user(vm.user_id)
     results['results']={}
 
     #friends list
-    
-    for i in range(5):
-        results['results'][i]="What they're working on"
+    feed_users = user_service.construct_feed_user_list(vm.user)
+    for user_id in feed_users:
+        user_name = user_service.get_name_from_id(user_id)
+        results['results'][user_name]=attempt_service.get_todays_attemptdays_for_user(user_id)
 
     return results
 

@@ -1,4 +1,5 @@
 from centurio.data.users import User
+from centurio.data.cohorts import Cohort
 from passlib.handlers.sha2_crypt import sha512_crypt as crypto
 import centurio.services.mongo_setup as mongo_setup
 import centurio.services.attempt_services as attempt_service
@@ -14,6 +15,10 @@ def find_user_by_email(email: str) -> User:
 def find_user_by_id(user_id: bson.ObjectId) -> User:
     mongo_setup.global_init()
     return User.objects(id=user_id).first()
+
+def get_name_from_id(user_id: bson.ObjectId):
+    mongo_setup.global_init()
+    return User.objects(id=user_id).first().name
 
 def create_user(name,email,password):
     
@@ -47,12 +52,20 @@ def validate_user(email: str, password: str) -> User:
     return user
 
 def construct_feed_user_list(user):
-    #get the members of the cohort
-    #todo
+    user_set = set()
+
+    #get_cohorts for active attempts
     active_attempts = attempt_service.get_active_attempt_list(user)
-    user_list = []
+    for attempt in active_attempts:
+        cohort_id = attempt.cohort_id
+        user_set.update(set(Cohort.objects(id=cohort_id).first().users))
+
     #get friends
-    user_list.append(list(User.objects(id=user.id).friends_list))
+    user_set.update(User.objects(id=user.id).first().friends_list)
+
+    user_set.discard(user.id)
+
+    return user_set
 
 
 
