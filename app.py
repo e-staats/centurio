@@ -21,11 +21,13 @@ def register_blueprints():
     from centurio.views import account_views
     from centurio.views import project_views
     from centurio.views import attempt_views
+    from centurio.views import user_views
 
     app.register_blueprint(home_views.blueprint)
     app.register_blueprint(account_views.blueprint)
     app.register_blueprint(project_views.blueprint)
     app.register_blueprint(attempt_views.blueprint)
+    app.register_blueprint(user_views.blueprint)
 
 
 if __name__=="__main__":

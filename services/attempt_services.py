@@ -60,7 +60,7 @@ def get_attempt_info_for_date(attempt,date,project):
         day_id = attempt_day.day_id
         day = Day.objects(id=day_id).first()
         return {"project_name": project.name,
-                "ordinal": attempt_day.ordinal,
+                "attempt_day": attempt_day,
                 "day": day,
                 }
 

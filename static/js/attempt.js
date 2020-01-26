@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll("#day")
+    for (const button of buttons) {
+        $(button).one('click', complete_day)
+    }
+});
+
 function complete_day () {
     $.ajax({
         type: "POST",

@@ -29,8 +29,8 @@ def index():
     #friends list
     feed_users = user_service.construct_feed_user_list(vm.user)
     for user_id in feed_users:
-        user_name = user_service.get_name_from_id(user_id)
-        results['results'][user_name]=attempt_service.get_todays_attemptdays_for_user(user_id)
+        user = user_service.find_user_by_id(user_id)
+        results['results'][user]=attempt_service.get_todays_attemptdays_for_user(user_id)
 
     return results
 
