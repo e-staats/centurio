@@ -33,6 +33,8 @@ def complete_day():
    request = request_dict.create('')
    attempt_id = request['attempt_id']
    attempt_day_id = request['attempt_day_id']
+   user_comment = request['comment']
+   print(user_comment)
    updated = attempt_service.complete_day(attempt_id, attempt_day_id)
    if not updated:
       return jsonify(status="error")

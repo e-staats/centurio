@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll("#attempt")
+    for (const button of buttons) {
+        button.onclick = attempt_project
+    }
+});
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector("#test_project_maker").onclick = make_test_projects
+});
+
 function attempt_project () {
     $.ajax({
         type: "POST",

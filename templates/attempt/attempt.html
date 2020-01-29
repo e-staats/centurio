@@ -27,7 +27,7 @@
                                 <button id="day-complete" name="{{d.id}}" data-attempt='{{attempt.id}}'
                                     class="btn btn-success btn-sm align-self-end completed" disabled>Completed</button>
                                 {% else %}
-                                <button id="day" name="{{d.id}}" data-attempt='{{attempt.id}}'
+                                <button id="start-complete" name="{{d.id}}" data-attempt='{{attempt.id}}'
                                     class="btn btn-outline-success btn-sm align-self-end complete">Complete</button>
                                 {% endif %}
                             </div>
@@ -42,6 +42,10 @@
         <div class="col-md-2"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/attempt.css">
 {% endblock %}
 
 {% block additional_js %}

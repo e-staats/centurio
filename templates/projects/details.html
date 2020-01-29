@@ -15,7 +15,8 @@
                     <div class="card-subtitle mb-2">
                         {{project.description}}
                     </div>
-                    <button class="btn btn-outline-info btn-sm align-self-end">Sign me up!</button>
+                    <button id="attempt" name="{{project.link_identifier}}" type="submit"
+                        class="btn btn-success btn-sm align-self-end">Sign me up!</button>
                     {% for d in project_days %}
                     <div class="feed-item">
                         <div class="row">
@@ -43,4 +44,8 @@
 
 {% block additional_css %}
 <link rel="stylesheet" href="/static/css/projects.css">
+{% endblock %}
+
+{% block additional_js %}
+<script src="/static/js/project.js"></script>
 {% endblock %}

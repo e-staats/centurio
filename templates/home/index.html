@@ -22,8 +22,13 @@
 <script src="/static/js/home.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('button').onclick = count
+        document.querySelector('button').onclick = add_text_box
     });
-    let counter = 0;
+
+    function add_text_box () {
+        $(this).after("<div class='row'><button>New Button</button>")
+        $(this).after("<textarea></textarea></div>")
+        $(this).remove()    
+    }
 </script>
 {% endblock %}
