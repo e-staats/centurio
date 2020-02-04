@@ -4,8 +4,8 @@ from centurio.infrastructure.view_modifiers import response
 import centurio.infrastructure.cookie_auth as cookie
 import centurio.services.project_services as project_service
 import centurio.services.attempt_services as attempt_service
-from centurio.viewmodels.project.index_viewmodel import IndexViewModel
 from centurio.viewmodels.attempt.attempt_viewmodel import AttemptViewModel
+from centurio.viewmodels.attempt.comment_viewmodel import CommentViewModel
 import centurio.infrastructure.request_dict as request_dict
 from centurio.data.projects import Project
 # pylint: disable=no-member
@@ -26,6 +26,7 @@ def project_details(attempt_id: str):
 
     return vm.to_dict()
 
+# ################### ATTEMPT ACTIONS #################################
 
 @blueprint.route('/_complete_day', methods=['POST'])
 @response(template_file='attempt/attempt.html')
@@ -33,9 +34,21 @@ def complete_day():
    request = request_dict.create('')
    attempt_id = request['attempt_id']
    attempt_day_id = request['attempt_day_id']
-   user_comment = request['comment']
-   print(user_comment)
-   updated = attempt_service.complete_day(attempt_id, attempt_day_id)
+   comment = request['comment']
+   updated = attempt_service.complete_day(attempt_id, attempt_day_id, comment)
+   if not updated:
+      return jsonify(status="error")
+   return jsonify(status="success")
+
+@blueprint.route('/_add_comment', methods=['POST'])
+@response(template_file='attempt/attempt.html')
+def add_comment():
+   vm = CommentViewModel()
+   request = request_dict.create('')
+   attempt_id = request['attempt_id']
+   attempt_day_id = request['attempt_day_id']
+   comment = request['comment']
+   updated = attempt_service.add_comment(attempt_id, attempt_day_id, comment, vm.user_id)
    if not updated:
       return jsonify(status="error")
    return jsonify(status="success")

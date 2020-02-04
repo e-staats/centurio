@@ -20,16 +20,19 @@
                                 <a href="/attempt/{{d}}">{{ day_info[d]['project_name'] }}</a> Day
                                 {{ day_info[d]['attempt_day'].ordinal }}
                                 <div>{{day_info[d]['day'].description}}</div>
+                                {% if day_info[d]['attempt_day'].user_description %}
+                                {{day_info[d]['attempt_day'].user_description}}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 {% if day_info[d]['attempt_day'].status=="complete" %}
-                                <button id="day-complete" name="{{day_info[d]['attempt_day'].id}}" data-attempt='{{d}}'
+                                <button name="{{day_info[d]['attempt_day'].id}}" data-attempt='{{d}}'
                                     class="btn btn-success btn-sm align-self-end completed" disabled>Completed</button>
                                 {% else %}
-                                <button id="day" name="{{day_info[d]['attempt_day'].id}}" data-attempt='{{d}}'
-                                    class="btn btn-outline-success btn-sm align-self-end complete">Complete</button>
+                                <button name="{{day_info[d]['attempt_day'].id}}" data-attempt='{{d}}'
+                                    class="btn btn-outline-success btn-sm align-self-end start-complete">Complete</button>
                                 {% endif %}
                             </div>
                         </div>

@@ -19,16 +19,21 @@
                             <div class="col-md-12">
                                 <a href="#">Day {{d.ordinal}}</a>
                                 <div class="desc">{{day_descriptions[d.ordinal]}}</div>
+                                {% if d.user_description %}
+                                {{d.user_description}}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
+                                <button name="{{d.id}}" data-attempt='{{attempt.id}}'
+                                    class="btn btn-outline-info btn-sm align-self-end comment">Comment</button>
                                 {% if d.status=="complete" %}
                                 <button id="day-complete" name="{{d.id}}" data-attempt='{{attempt.id}}'
                                     class="btn btn-success btn-sm align-self-end completed" disabled>Completed</button>
                                 {% else %}
                                 <button id="start-complete" name="{{d.id}}" data-attempt='{{attempt.id}}'
-                                    class="btn btn-outline-success btn-sm align-self-end complete">Complete</button>
+                                    class="btn btn-outline-success btn-sm align-self-end start-complete">Complete</button>
                                 {% endif %}
                             </div>
                         </div>

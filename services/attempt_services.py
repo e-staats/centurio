@@ -4,6 +4,7 @@ from centurio.data.attempts import Attempt
 from centurio.data.users import User
 from centurio.data.cohorts import Cohort
 from centurio.data.attemptdays import AttemptDay
+from centurio.data.comments import Comment
 import centurio.services.mongo_setup as mongo_setup
 import centurio.services.attempt_services as attempt_service
 import datetime
@@ -64,11 +65,12 @@ def get_attempt_info_for_date(attempt,date,project):
                 "day": day,
                 }
 
-def complete_day(attempt_id, day_id):
+def complete_day(attempt_id, day_id, comment):
     mongo_setup.global_init()
     did = ObjectId(day_id)
     success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__status="complete")
     success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__complete_instant=datetime.datetime.now())
+    success = Attempt.objects(id=attempt_id, attempt_days__id=did).update(set__attempt_days__S__user_description=comment)
     if not success:
         return None
     success = check_attempt_status(attempt_id)
@@ -77,3 +79,15 @@ def complete_day(attempt_id, day_id):
 def get_active_attempt_list(user):
     attempts = Attempt.objects(user_id=user.id, status='in-progress')
     return list(attempts)
+
+def add_comment(attempt_id, day_id, user_comment, user_id):
+    mongo_setup.global_init()
+    did = ObjectId(day_id)
+    comment = Comment()
+    comment.attemptday_id = day_id
+    comment.user_id = user_id
+    comment.text = user_comment
+
+    success = Attempt.objects(id=attempt_id, attempt_days__id=did).update_one(push__attempt_days__S__comments=comment)
+
+    return success
