@@ -3,6 +3,7 @@ from centurio.data.cohorts import Cohort
 from passlib.handlers.sha2_crypt import sha512_crypt as crypto
 import centurio.services.mongo_setup as mongo_setup
 import centurio.services.attempt_services as attempt_service
+import centurio.services.cohort_services as cohort_service
 import bson
 
 # pylint: disable=no-member
@@ -19,6 +20,17 @@ def find_user_by_id(user_id: bson.ObjectId) -> User:
 def get_name_from_id(user_id: bson.ObjectId):
     mongo_setup.global_init()
     return User.objects(id=user_id).first().name
+
+def get_friends(user_id: bson.ObjectId) -> set:
+    return User.objects(id=user_id).first().friends_list
+
+def get_cohort_members_for_user(user_id: bson.ObjectId) -> set:
+    cohort_members = {}
+    cohort_list = User.objects(id=user_id).first().cohorts
+    for cohort_id in cohort_list:
+        cohort_members.update(cohort_service.get_cohort_members(cohort_id))
+    return cohort_members
+
 
 def create_user(name,email,password):
     

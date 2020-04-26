@@ -1,0 +1,39 @@
+{% extends "/shared/_layout.html" %}
+{% block nav %}Home{% endblock %}
+{% block main_content %}
+<div class="container main-feed">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">feed title</h2>
+                    <div class="card-subtitle mb-2">
+                        Testing out the feed
+                    </div>
+                    <div class="feed-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="#}}">Feed item</a>
+                                <div class="desc">feed description</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    Feed footer
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_js %}
+<script src="/static/js/feed.js"></script>
+{% endblock %}

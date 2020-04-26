@@ -98,19 +98,29 @@ def add_project_to_user(user, project_link):
     for day_id in project.days:
         day = day_service.get_day_from_id(day_id)
         attempt_day = AttemptDay()
+        attempt_day.user_id = user_id
+        attempt_day.attempt_id = attempt.id
         attempt_day.ordinal = day.ordinal
         attempt_day.scheduled_date = date
         attempt_day.project_id = project.id
         attempt_day.day_id = day.id
-        attempt.attempt_days.append(attempt_day)
+        success = attempt_day.save()
+        if not success:
+            print("unable to add attempt day. Check the IDs and try again.")
+            return
+        success = Attempt.objects(id=attempt.id).update_one(push__attempt_days=attempt_day.id)
+        if not success:
+            return
         date = date + datetime.timedelta(days=1)
     
     success = attempt.save()
     if not success:
         return
+
     success = User.objects(id=user_id).update_one(push__attempts=attempt.id)
     if not success:
         return
+
         
     add_user_to_cohort(user_id,cohort_id)
 

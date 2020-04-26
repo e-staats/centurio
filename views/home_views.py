@@ -23,3 +23,9 @@ def about():
 def todo():
     vm = IndexViewModel()
     return vm.to_dict()
+
+@blueprint.route('/feed')
+@response(template_file="home/feed_test.html")
+def feed_test():
+    vm = IndexViewModel()
+    return vm.to_dict()
