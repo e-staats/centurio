@@ -25,7 +25,7 @@ def get_friends(user_id: bson.ObjectId) -> set:
     return User.objects(id=user_id).first().friends_list
 
 def get_cohort_members_for_user(user_id: bson.ObjectId) -> set:
-    cohort_members = {}
+    cohort_members = set()
     cohort_list = User.objects(id=user_id).first().cohorts
     for cohort_id in cohort_list:
         cohort_members.update(cohort_service.get_cohort_members(cohort_id))
