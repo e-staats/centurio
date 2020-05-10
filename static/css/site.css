@@ -41,7 +41,7 @@ body {
     font-style: italic;
 }
 
-.feed-box {
+.feed-card {
     background-color: white;
     box-shadow: 2px 2px 4px 1px #888888;
     margin-top: 20px;
@@ -81,4 +81,8 @@ nav {
 .card {
     box-shadow: 1px 1px 1px 1px #888888;
     margin-top: 20px;
+}
+
+.prof-pic-small {
+    width: 100%;
 }

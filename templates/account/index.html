@@ -8,6 +8,12 @@
         <div class="col-md-2"></div>
 
         <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">You</h2>
+                    <img src={{user.prof_pic_url}}>
+                </div>
+            </div>
 
             <div class="card">
                 <div class="card-body">
@@ -50,8 +56,7 @@
                     <div class="card-subtitle mb-2">
                         Here's what all your friends are doing today
                     </div>
-                    <button name="" data-attempt=''
-                                    class="btn btn-outline-success">Test Feed</button>
+                    <button name="" data-attempt='' class="btn btn-outline-success">Test Feed</button>
 
                     {% for user in results %}
                     <div class="feed-item">

@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#js pacakges from yarn
+static/node_modules/
+
+#images
+static/img/
+node_modules

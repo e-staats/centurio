@@ -79,5 +79,3 @@ def construct_feed_user_list(user):
 
     return user_set
 
-
-

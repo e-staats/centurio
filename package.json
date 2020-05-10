@@ -1,0 +1,28 @@
+{
+  "name": "centurio",
+  "version": "1.0.0",
+  "description": "centurio web app",
+  "main": "index.js",
+  "repository": "https://github.com/pithko/centurio.git",
+  "author": "Eric Staats <eric.k.staats@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-react": "^7.9.4",
+    "axios": "^0.19.2",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "jquery": "^3.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-infinite-scroll-component": "^5.0.4",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "build": "webpack-cli --mode production"
+  }
+}
