@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import FeedCard from './FeedCard'
+import FeedCard from '../components/FeedCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-class App extends Component {
+class Feed extends Component {
   state = {
     cards: [],
     initialCount: 20,
@@ -30,22 +30,20 @@ class App extends Component {
       <div>
         <hr />
         <div className='main-feed'>
-        <InfiniteScroll
-          dataLength={this.state.cards.length}
-          next={this.fetchMoreData}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-        >
-          {this.state.cards.map((cards, index) => (
-            <FeedCard />
-          ))}
-        </InfiniteScroll>
+          <InfiniteScroll
+            dataLength={this.state.cards.length}
+            next={this.fetchMoreData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+          >
+            {this.state.cards.map((cards, index) => (
+              <FeedCard />
+            ))}
+          </InfiniteScroll>
         </div>
       </div>
     );
   }
 }
 
-
-
-export default App
+ReactDOM.render(<Feed />, document.getElementById('feed'))
