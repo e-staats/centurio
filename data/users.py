@@ -2,10 +2,11 @@ import mongoengine
 import datetime
 import os
 import sys
-from centurio.data.user_info import UserInfo
-from centurio.data.user_settings import UserSettings
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
+from centurio.data.user_settings import UserSettings
+from centurio.services.user_creation_services import assign_default_prof_pic
+
 
 class User(mongoengine.Document):
     name = mongoengine.StringField(required=True)
@@ -17,8 +18,11 @@ class User(mongoengine.Document):
     attempts = mongoengine.ListField()
     cohorts = mongoengine.ListField()
     friends_list = mongoengine.ListField()
-    user_info = mongoengine.EmbeddedDocumentField(UserInfo)
     user_settings = mongoengine.EmbeddedDocumentField(UserSettings)
+    prof_pic_url = mongoengine.StringField(default=assign_default_prof_pic)
+    location = mongoengine.StringField()
+    bio = mongoengine.StringField()
+    social_media_link = mongoengine.StringField()
 
 
     meta = {

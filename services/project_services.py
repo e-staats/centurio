@@ -16,6 +16,13 @@ def get_project_from_id(project_id):
         return None
     return project
 
+def get_project_name_from_id(project_id):
+    mongo_setup.global_init()
+    project = Project.objects(id=project_id).first()
+    if not project:
+        return None
+    return project.name
+
 def get_project_from_link_id(project_link_id):
     mongo_setup.global_init()
     project = Project.objects(link_identifier=project_link_id).first()

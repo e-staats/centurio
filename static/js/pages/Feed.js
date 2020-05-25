@@ -46,4 +46,7 @@ class Feed extends Component {
   }
 }
 
-ReactDOM.render(<Feed />, document.getElementById('feed'))
+ReactDOM.render(
+  <Feed />,
+  document.getElementById('feed')
+)

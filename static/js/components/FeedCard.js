@@ -6,8 +6,6 @@ import CardDayDetails from './CardDayDetail'
 import CardDayComment from './CardDayComment'
 
 class FeedCard extends Component {
-    
-
     render () {
         return(
             <div className="feed-card">

@@ -1,13 +1,12 @@
 from flask import Response
 import services.mongo_setup as mongo_setup
-from data.users import User
 import datetime
-import unittest.mock
 import pprint
 import os
 import sys
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
+from data.users import User
 # pylint: disable=no-member
 
 def primary_user_data():

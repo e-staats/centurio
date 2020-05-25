@@ -12,6 +12,10 @@ def get_day_from_id(day_id):
     day = Day.objects(id=day_id).first()
     return day
 
+def get_name_from_day_id(day_id):
+    day = Day.objects(id=day_id).first()
+    return day.name
+
 def get_description_from_day_id(day_id):
     day = Day.objects(id=day_id).first()
     return day.description

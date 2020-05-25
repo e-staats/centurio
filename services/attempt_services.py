@@ -20,6 +20,15 @@ def get_attempt_from_id(attempt_id):
         return None
     return attempt
 
+def get_project_name_from_attempt_id(attempt_id):
+    attempt = Attempt.objects(id=attempt_id).first()
+    if not attempt:
+        return None
+    project_name = Project.objects(id=attempt.project_id).first().name
+    if not project_name:
+        return None
+    return project_name
+
 
 def check_attempt_status(attempt_id):
     mongo_setup.global_init()

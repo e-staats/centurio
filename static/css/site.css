@@ -44,8 +44,9 @@ body {
 .feed-card {
     background-color: white;
     box-shadow: 2px 2px 4px 1px #888888;
-    margin-top: 20px;
+    margin: 20px 5px 5px 5px;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .logo-area {
@@ -80,6 +81,7 @@ nav {
 
 .card {
     box-shadow: 1px 1px 1px 1px #888888;
+    box-sizing: border-box;
     margin-top: 20px;
 }
 

@@ -21,6 +21,10 @@ def get_name_from_id(user_id: bson.ObjectId):
     mongo_setup.global_init()
     return User.objects(id=user_id).first().name
 
+def get_prof_pic_from_id(user_id: bson.ObjectId):
+    mongo_setup.global_init()
+    return User.objects(id=user_id).first().prof_pic_url
+
 def get_friends(user_id: bson.ObjectId) -> set:
     return User.objects(id=user_id).first().friends_list
 
